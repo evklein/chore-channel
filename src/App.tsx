@@ -18,6 +18,7 @@ import { Chip, Grid } from '@mui/material';
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import SignIn from './auth/SignIn';
 
 let firebaseConfig = require('./firebase-config.json');
 const firebaseApp = firebase.initializeApp(firebaseConfig);
@@ -39,16 +40,10 @@ function App() {
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
         <div className="App">
-          { user ? <ChoresComponent /> : <SignIn />}
+          { user ? <ChoresComponent /> : <SignIn auth={auth} />}
         </div>
     </ThemeProvider>
   );
-}
-
-function SignOut() {
-  return auth.currentUser && (
-    <button onClick={() => auth.signOut()}>Sign Out</button>
-  )
 }
 
 function ChoresComponent() {
