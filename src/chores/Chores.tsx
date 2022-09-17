@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material";
 import { collection, Firestore, orderBy, query } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
+import ChoreCard from "./ChoreCard";
 
 interface ChoresProps {
     firestore: Firestore,
@@ -14,9 +15,9 @@ function Chores(props: ChoresProps) {
 
   return (
     <Grid container spacing={0}>
-    {chores && chores.map(c => (
+    {chores && chores.map(choreData => (
       <Grid item xs={12} sm={6} md={3}>
-        <ChoreCard key={c.id} chore={c} />
+        <ChoreCard db={props.firestore} key={choreData["name"]} choreData={choreData} />
       </Grid>
     ))}
     </Grid>
