@@ -1,4 +1,4 @@
-import { Auth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { Auth, signInWithPopup } from "firebase/auth";
 import firebase from "firebase/compat/app";
 
 interface SignInProps {

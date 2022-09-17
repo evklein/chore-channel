@@ -9,15 +9,15 @@ interface ChoresProps {
 
 function Chores(props: ChoresProps) {
   const [chores] = useCollectionData(query(
-    collection(props.firestore, 'chores'),
-    orderBy('name'),
+    collection(props.firestore, "chores"),
+    orderBy("name"),
   ));
 
   return (
     <Grid container spacing={0}>
     {chores && chores.map(choreData => (
       <Grid item xs={12} sm={6} md={3}>
-        <ChoreCard db={props.firestore} key={choreData["name"]} choreData={choreData} />
+        <ChoreCard firestore={props.firestore} key={choreData["name"]} choreData={choreData} />
       </Grid>
     ))}
     </Grid>

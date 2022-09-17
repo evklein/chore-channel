@@ -1,18 +1,11 @@
 import "./App.css";
 
-import firebase from "firebase/compat/app"; 
-import "firebase/compat/firestore";
 import "firebase/compat/auth";
+import firebase from "firebase/compat/app"; 
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 import { useAuthState } from "react-firebase-hooks/auth";
-import { DocumentData, getFirestore, serverTimestamp } from "firebase/firestore";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { Chip } from "@mui/material";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -21,7 +14,6 @@ import Chores from "./chores/Chores";
 
 const firebaseConfig = require("./firebase-config.json");
 const firebaseApp = firebase.initializeApp(firebaseConfig);
-const firebaseDb = firebase.firestore(firebaseApp);
 
 const auth = getAuth(firebaseApp);
 const firestore = getFirestore(firebaseApp);
