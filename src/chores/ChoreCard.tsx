@@ -45,6 +45,7 @@ function ChoreCard(props: ChoreCardProps) {
     }
 
     switch (period) {
+      case 5:
       case 7:
         return "Weekly";
       case 14:
