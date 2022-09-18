@@ -2,7 +2,8 @@
 
 Chore Channel is a web application which helps us track chores in our house. The application works on all devices, including mobile.
 
-The application also runs continuously on an old Samsung Galaxy tablet that I have mounted to the wall in the main bathroom of our house.
+I also run it continuously on an old Samsung Galaxy tablet that I have mounted to the wall in the main bathroom of our house. This way, it's one of the first things I see every day, and one of the last things I see before I go to sleep.
+
 ![image](https://user-images.githubusercontent.com/5017975/190917408-63a0921e-d7a4-4438-b9ff-40064ef7185d.png)
 
 ### Technologies Used
