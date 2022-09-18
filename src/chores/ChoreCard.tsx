@@ -21,43 +21,48 @@ function ChoreCard(props: ChoreCardProps) {
 
   const getLastCompletedDate = () => {
     if (last_completed) {
-        var lastCompletedMs = last_completed.seconds * 1000;
-        return new Date(lastCompletedMs);
+      var lastCompletedMs = last_completed.seconds * 1000;
+      var lastCompletedDate = new Date(lastCompletedMs);
+      return new Date(lastCompletedDate.getFullYear(), lastCompletedDate.getMonth(), lastCompletedDate.getDate());
     }
 
     return new Date();
   }
 
+  const getDifferenceInDaysSinceTaskCompleted = () => {
+    var now = new Date();
+    var nowStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var lastCompletedDate = getLastCompletedDate();
+    return (nowStart.getTime() - lastCompletedDate.getTime()) / (1000 * 3600 * 24);
+  }
+
   const getPeriodString = () => {
+    var daysOfDifference = getDifferenceInDaysSinceTaskCompleted();
+    if (period === 1) return "Daily";
+    else if (daysOfDifference < period) {
+      var remainingDays = period - daysOfDifference;
+      return remainingDays + (remainingDays > 1 ? " days remaining" : " day remaining");
+    }
+
     switch (period) {
-        case "1":
-            return "Daily";
-        case "7":
-            return "Weekly";
-        case "14":
-            return "Biweekly"
-        case "30":
-            return "Monthly";
-        default:
-            return "Unknown Period";
+      case 7:
+        return "Weekly";
+      case 14:
+        return "Biweekly"
+      case 30:
+        return "Monthly";
+      default:
+        return "Unknown Period";
     }
   }
 
   const getStatusTag = () => {
-    var now = new Date();
-    var lastCompletedDate = getLastCompletedDate();
-    
-    var monthDate = now.getDay();
-
-    if (now.getDay() === lastCompletedDate.getDay() + 1 || (
-        lastCompletedDate.getDay() === 28 || lastCompletedDate.getDay() === 30 || lastCompletedDate.getDay() === 31  &&
-        now.getDay() === 1))
+    var daysOfDifference = getDifferenceInDaysSinceTaskCompleted();
+    if (daysOfDifference === period)
     {
         return <Chip label="Do Today" color="warning" sx={{ ml: 1 }} />;
     }
-    if (now.getDay() >= lastCompletedDate.getDay() + 2 || (
-        lastCompletedDate.getDay() === 28 || lastCompletedDate.getDay() === 30 || lastCompletedDate.getDay() === 31  &&
-        now.getDay() >= 2))
+    if (daysOfDifference > period)
     {
         return <Chip label="Overdue" color="error" sx={{ ml: 1 }} />;
     }
