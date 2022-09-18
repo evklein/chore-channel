@@ -3,11 +3,12 @@
 Chore Channel is a web application which helps us track chores in our house. The application works on all devices, including mobile.
 
 The application also runs continuously on an old Samsung Galaxy tablet that I have mounted to the wall in the main bathroom of our house.
+![image](https://user-images.githubusercontent.com/5017975/190917408-63a0921e-d7a4-4438-b9ff-40064ef7185d.png)
 
 ### Technologies Used
 * React
 * Typescript
-* Material Design ((MUI Library for React[https://mui.com/]))
+* Material Design ([MUI Library for React](https://mui.com/))
 * Firebase for Deployment / Hosting
 
 ### Set-Up
