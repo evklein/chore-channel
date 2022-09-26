@@ -11,7 +11,7 @@ interface ChoreCardProps {
 
 function ChoreCard(props: ChoreCardProps) {
   const { firestore } = props;
-  const { name, last_completed, period } = props.choreData;
+  const { name, last_completed, period, tolerance } = props.choreData;
 
   const updateLastCompleteTime = async() => {
     await updateDoc(doc(firestore, "chores", name), {
@@ -59,13 +59,17 @@ function ChoreCard(props: ChoreCardProps) {
 
   const getStatusTag = () => {
     var daysOfDifference = getDifferenceInDaysSinceTaskCompleted();
-    if (daysOfDifference === period)
+    if (daysOfDifference >= period && daysOfDifference <= period + tolerance)
     {
         return <Chip label="Do Today" color="warning" sx={{ ml: 1 }} />;
     }
-    if (daysOfDifference > period)
+    else if (daysOfDifference > period + tolerance)
     {
         return <Chip label="Overdue" color="error" sx={{ ml: 1 }} />;
+    }
+    else if (period !== 1 && (period - daysOfDifference <= 3))
+    {
+      return <Chip label={`Upcoming (${period - daysOfDifference})`} color="info" sx={{ ml: 1}} />;
     }
     return <Chip label="Not Due" color="success" sx={{ ml: 1 }} />;
   }
