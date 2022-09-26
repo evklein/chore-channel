@@ -47,3 +47,4 @@ To add items to the page, create a collection named "chores", and have collectio
   - `name` [String]: The name of the chore
   - `period` [Number]: The number of days between how often this chore needs to be performed (daily = 1, weekly = 7, etc.)
   - `last_completed` [Timestamp]: The last completed date of the chore
+  - `tolerance` [Number]: The amount of days in addition to the period that can pass after this chore is due before it is considered late.
