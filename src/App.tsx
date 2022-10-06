@@ -14,6 +14,7 @@ import Chores from "./chores/Chores";
 import { Box, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
 import { TabPanelUnstyled } from "@mui/base";
+import Goals from "./goals/Goals";
 
 const firebaseConfig = require("./firebase-config.json");
 const firebaseApp = firebase.initializeApp(firebaseConfig);
@@ -51,6 +52,7 @@ function App() {
                 <Chores firestore={firestore} /> 
               </div>
               <div hidden={selectedTab !== 1}>
+                <Goals firestore={firestore} />
               </div>
             </>
 
