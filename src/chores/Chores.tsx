@@ -51,7 +51,6 @@ function Chores(props: ChoresProps) {
       ))}
       </Grid>
     </>
-
   );
 }
 
