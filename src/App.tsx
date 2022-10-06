@@ -11,6 +11,9 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import SignIn from "./auth/SignIn";
 import Chores from "./chores/Chores";
+import { Box, Tab, Tabs } from "@mui/material";
+import { useState } from "react";
+import { TabPanelUnstyled } from "@mui/base";
 
 const firebaseConfig = require("./firebase-config.json");
 const firebaseApp = firebase.initializeApp(firebaseConfig);
@@ -26,11 +29,33 @@ const darkTheme = createTheme({
 
 function App() {
   const [user] = useAuthState(auth);
+  const [selectedTab, selectTab] = useState(0);
+
+  const handleTabChange = (event: React.SyntheticEvent, tabValue: number) => {
+    selectTab(tabValue);
+  }
+
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
         <div className="App">
-          { user ? <Chores firestore={firestore} /> : <SignIn auth={auth} />}
+          { user ?
+            <>
+              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <Tabs value={selectedTab} onChange={handleTabChange}>
+                  <Tab label="Chores" />
+                  <Tab label="Workouts" />
+                </Tabs>
+              </Box>
+              <div hidden={selectedTab !== 0}>
+                <Chores firestore={firestore} /> 
+              </div>
+              <div hidden={selectedTab !== 1}>
+              </div>
+            </>
+
+
+          : <SignIn auth={auth} />}
         </div>
     </ThemeProvider>
   );
