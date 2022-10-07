@@ -1,21 +1,21 @@
-import { collection, Firestore, orderBy, query } from "firebase/firestore";
+import { collection, DocumentData, Firestore, orderBy, query } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
 interface GoalLogsProps {
-    firestore: Firestore,
+    events: DocumentData[] | undefined,
 }
 
-function GoalSection(props: GoalLogsProps) {
-  const [events] = useCollectionData(query(
-    collection(props.firestore, "events"),
-    orderBy("completed_on"),
-  ));
-
+function GoalLogs(props: GoalLogsProps) {
   return (
     <>
-
+        {props.events && props.events.length}
+        {props.events && props.events?.map((event, i) => {
+            return (
+                <span key={i}>{event.completed_on.seconds}: Completed event of type "{event.event_type}"</span>
+            );
+        })}
     </>
   );
 }
 
-export default GoalSection;
+export default GoalLogs;

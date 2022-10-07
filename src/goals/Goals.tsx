@@ -1,6 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import { collection, Firestore, orderBy, query } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
+import GoalLogs from "./GoalLogs";
 import GoalSection from "./GoalSection";
 
 interface GoalProps {
@@ -12,6 +13,13 @@ function Goals(props: GoalProps) {
     collection(props.firestore, "weekly-goals"),
     orderBy("name"),
   ));
+
+  const [events] = useCollectionData(query(
+    collection(props.firestore, "events"),
+    orderBy("completed_on")
+  ));
+
+  console.log(events);
 
   return (
     <>
@@ -31,6 +39,7 @@ function Goals(props: GoalProps) {
                 <GoalSection key={index} goal={goal} />
             );
         })}
+        <GoalLogs events={events} />
     </>
   );
 }
