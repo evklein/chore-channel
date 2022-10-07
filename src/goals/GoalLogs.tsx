@@ -14,7 +14,7 @@ function GoalLogs(props: GoalLogsProps) {
     <>
         {props.events && props.events?.map((event, i) => {
             return (
-                <span key={i}>{renderEventDate(event.completed_on.seconds)}: Completed event of type "{event.event_type}"</span>
+                <div key={i}>{renderEventDate(event.completed_on.seconds)}: Completed event of type "{event.event_type}"</div>
             );
         })}
     </>

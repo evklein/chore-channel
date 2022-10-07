@@ -36,7 +36,7 @@ function Goals(props: GoalProps) {
         </Grid>
         {goals?.map((goal, index) => {
             return (
-                <GoalSection key={index} goal={goal} />
+                <GoalSection firestore={props.firestore} key={index} goal={goal} />
             );
         })}
         <GoalLogs events={events} />
