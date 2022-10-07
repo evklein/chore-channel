@@ -1,6 +1,7 @@
-import { Grid, Typography } from "@mui/material";
+import { Chip, Divider, Grid, Typography } from "@mui/material";
+import { red } from "@mui/material/colors";
 import { previousSunday } from "date-fns";
-import { collection, Firestore, orderBy, query } from "firebase/firestore";
+import { collection, DocumentData, Firestore, limit, orderBy, query } from "firebase/firestore";
 import { useState } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import GoalLogs from "./GoalLogs";
@@ -19,6 +20,7 @@ function Goals(props: GoalProps) {
   const [events] = useCollectionData(query(
     collection(props.firestore, "events"),
     orderBy("completed_on", "desc"),
+    limit(20),
   ));
 
   const [currentWeekStartDate] = useState(previousSunday(new Date()));
@@ -37,24 +39,37 @@ function Goals(props: GoalProps) {
     return Math.round(totalGoalsCompleted / totalGoalsToComplete * 100);
   }
 
+  const getCompletionsForGoal = (goal: DocumentData) => {
+    var totalCompletionsForGoal = 0;
+    events?.forEach((event) => {
+        if (event.completed_on.seconds * 1000 > currentWeekStartDate.getTime() && event.event_type === goal.name) {
+            totalCompletionsForGoal++;
+        }
+    });
+    return totalCompletionsForGoal;
+  }
+
   return (
     <>
         <Grid container spacing={2}>
-            <Grid item>
-                <Typography variant="h4" align="left" sx={{ marginX: 1 }}>Workouts</Typography>
-            </Grid>
-            <Grid item md={3}>
-                <Typography variant="h6" align="left">Week of <b>{currentWeekStartDate.toLocaleDateString()}</b></Typography>
+            <Grid item md={5}>
+                <Typography variant="h4" align="left" sx={{ marginX: 1, marginY: 1 }}>
+                  Goals <Chip color="info" variant="filled" size="medium" label={"Week of " + currentWeekStartDate.toLocaleDateString()} />
+                </Typography>
             </Grid>
             <Grid item md={7}>
-                <Typography variant="h5" align="right">Completion: {getCompletionRate()}%</Typography>
+                <Typography variant="h5" align="right" sx={{marginX: 1, marginY: 2}}>Completion:&nbsp;
+                  <b>{getCompletionRate()}%</b>
+                </Typography>
             </Grid>
         </Grid>
+        <Divider variant="middle" />
         {goals?.map((goal, index) => {
             return (
-                <GoalSection firestore={props.firestore} key={index} goal={goal} />
+                <GoalSection firestore={props.firestore} key={index} goal={goal} completions={getCompletionsForGoal(goal)} />
             );
         })}
+        <Divider variant="middle" sx={{ marginY: 1 }}/>
         <GoalLogs events={events} />
     </>
   );

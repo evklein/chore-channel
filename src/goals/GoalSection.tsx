@@ -4,6 +4,7 @@ import { doc, DocumentData, Firestore, setDoc } from "firebase/firestore";
 interface GoalSectionProps {
   firestore: Firestore,
   goal: DocumentData,
+  completions: number,
 }
 
 function GoalSection(props: GoalSectionProps) {
@@ -21,9 +22,12 @@ function GoalSection(props: GoalSectionProps) {
   for (var i = 0; i < required_completions; i++) {
     buttons.push(
       <Fab
-        color="primary"
+        color={i < props.completions ? "success" : "primary"}
         sx={{ marginX: 1 }}
-        onClick={() => clickGoal(props.goal.name)}
+        size="large"
+        onClick={() => {
+            if (props.completions < required_completions) clickGoal(props.goal.name);
+        }}
       >
         {i + 1}
       </Fab>
@@ -33,7 +37,7 @@ function GoalSection(props: GoalSectionProps) {
   return (
     <>
       <Grid item xs={12}>
-        <Typography variant="h5" align="left" sx={{ marginX: 1 }}>{name}</Typography>
+        <Typography variant="h5" align="left" sx={{ marginX: 1, marginY: 1 }}>{name}</Typography>
       </Grid>
       <Grid container justifyContent="flex-start">
         {buttons}
