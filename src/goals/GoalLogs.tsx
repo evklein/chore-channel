@@ -1,17 +1,20 @@
-import { collection, DocumentData, Firestore, orderBy, query } from "firebase/firestore";
-import { useCollectionData } from "react-firebase-hooks/firestore";
+import { DocumentData } from "firebase/firestore";
 
 interface GoalLogsProps {
     events: DocumentData[] | undefined,
 }
 
 function GoalLogs(props: GoalLogsProps) {
+
+  const renderEventDate = (seconds: number) => {
+    var eventDate = new Date(seconds * 1000);
+    return `${eventDate.toLocaleString('default', { month: 'long' })} ${eventDate.getDate()}, ${eventDate.getFullYear()}`;
+  }
   return (
     <>
-        {props.events && props.events.length}
         {props.events && props.events?.map((event, i) => {
             return (
-                <span key={i}>{event.completed_on.seconds}: Completed event of type "{event.event_type}"</span>
+                <span key={i}>{renderEventDate(event.completed_on.seconds)}: Completed event of type "{event.event_type}"</span>
             );
         })}
     </>
