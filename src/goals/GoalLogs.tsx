@@ -12,6 +12,12 @@ function GoalLogs(props: GoalLogsProps) {
     return `${eventDate.toLocaleString('default', { month: 'long' })} ${eventDate.getDate()}, ${eventDate.getFullYear()}`;
   }
 
+  if (!props.events || props.events.length === 0) {
+    return (
+      <Typography align="left" variant="h5" sx={{ marginX: 1, marginY: 1}}>No events logged this week.</Typography>
+    );
+  }
+
   return (
     <>
             <Typography align="left" variant="h5" sx={{ marginX: 1, marginY: 1}}>Log</Typography>
