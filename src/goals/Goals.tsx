@@ -10,6 +10,8 @@ import GoalSection from "./GoalSection";
 
 interface GoalProps {
     firestore: Firestore,
+    goalsSource: string,
+    eventsSource: string,
 }
 
 function Goals(props: GoalProps) {
@@ -17,11 +19,11 @@ function Goals(props: GoalProps) {
   const [nextWeekStartDate, setNextWeekStartDate] = useState(nextSunday(new Date()));
 
   const [goals] = useCollectionData(query(
-    collection(props.firestore, "weekly-goals"),
+    collection(props.firestore, props.goalsSource),
     orderBy("name"),
   ));
   const [events] = useCollectionData(query(
-    collection(props.firestore, "events"),
+    collection(props.firestore, props.eventsSource),
     where("completed_on", ">=", new Date(currentWeekStartDate.getFullYear(), currentWeekStartDate.getMonth(), currentWeekStartDate.getDate())),
     where("completed_on", "<", new Date(nextWeekStartDate.getFullYear(), nextWeekStartDate.getMonth(), nextWeekStartDate.getDate())),
     limit(20),

@@ -45,14 +45,18 @@ function App() {
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={selectedTab} onChange={handleTabChange}>
                   <Tab label="Chores" />
-                  <Tab label="Workouts" />
+                  <Tab label="Goals (Evan)" />
+                  <Tab label="Goals (Emma)" />
                 </Tabs>
               </Box>
               <div hidden={selectedTab !== 0}>
                 <Chores firestore={firestore} /> 
               </div>
               <div hidden={selectedTab !== 1}>
-                <Goals firestore={firestore} />
+                <Goals firestore={firestore} goalsSource={"weekly-goals"} eventsSource={"events"} />
+              </div>
+              <div hidden={selectedTab !== 2}>
+                <Goals firestore={firestore} goalsSource={"em-weekly-goals"} eventsSource={"em-events"} />
               </div>
             </>
 
